@@ -14,10 +14,22 @@
   <body>
     <div class="wrapper">
       <header class="header"><h1>Library</h1></header>
-      <div class="content">
-        <div class="sidebar"><form class="form"></form></div>
-        <div class="books"></div>
-      </div>
+      <main class="content">
+        <div class="sidebar">
+          <form class="form">
+            <label for="title">Title:</label>
+            <input name="title" type="text" />
+            <label for="author">Author:</label>
+            <input name="title" type="text" />
+            <div>
+              <label for="read">Read</label>
+              <input name="read" type="checkbox" />
+            </div>
+            <input type="submit" name="submit" value="Add book" />
+          </form>
+        </div>
+        <div class="bookshelf js-bookshelf"></div>
+      </main>
       <footer class="footer">
         <a href="https://github.com/scrof90">
           <img
