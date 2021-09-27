@@ -1,0 +1,72 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.wrapper {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header {
+  height: 72px;
+  background: darkslateblue;
+  color: white;
+  font-size: 32px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.books {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  align-content: stretch;
+  padding: 32px;
+  gap: 32px;
+}
+
+.book {
+  border: 1px solid #eee;
+  box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.06);
+  border-radius: 4px;
+  padding: 16px;
+  max-width: 25%;
+  min-width: 150px;
+  flex: 1 1 320px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  height: 72px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+}
+
+.sidebar {
+  background: royalblue;
+  flex: 0 0 20%;
+  padding: 1em;
+}
+
+.my-github {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+}
