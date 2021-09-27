@@ -1,3 +1,6 @@
+const addBookBtn = document.querySelector('.js-btn-add-book');
+addBookBtn.onclick = addBookToLibrary;
+
 let library = [];
 
 class Book {
@@ -18,7 +21,13 @@ class Book {
   }
 }
 
-function addBookToLibrary(title, author, read) {
+function addBookToLibrary(e) {
+  const inputTitle = document.querySelector('.js-input-title');
+  const inputAuthor = document.querySelector('.js-input-author');
+  const checkboxRead = document.querySelector('.js-checkbox-read');
+  const title = inputTitle.value;
+  const author = inputAuthor.value;
+  const read = checkboxRead.checked;
   const newBook = new Book(title, author, read);
   library.push(newBook);
   newBook.setID();
@@ -27,11 +36,15 @@ function addBookToLibrary(title, author, read) {
 
 function updateBookshelf() {
   library.forEach((book) => {
-    const bookCard = document.createElement('div');
-    bookCard.classList.add('book-card');
-    bookCard.innerHTML = book.getHTMLTemplate();
-    document.querySelector('.js-bookshelf').appendChild(bookCard);
+    const bookShelf = document.querySelector('.js-bookshelf');
+    const bookCard = createBookCard(book);
+    bookShelf.appendChild(bookCard);
   });
 }
 
-addBookToLibrary('Zlaty Troll', 'O.S. Leshev', 100, true);
+function createBookCard(book) {
+  const bookCard = document.createElement('div');
+  bookCard.classList.add('book-card');
+  bookCard.innerHTML = book.getHTMLTemplate();
+  return bookCard;
+}

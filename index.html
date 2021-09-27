@@ -18,14 +18,20 @@
         <div class="sidebar">
           <form class="form">
             <label for="title">Title:</label>
-            <input name="title" type="text" />
+            <input class="input js-input-title" name="title" type="text" />
             <label for="author">Author:</label>
-            <input name="title" type="text" />
+            <input class="input js-input-author" name="author" type="text" />
             <div>
               <label for="read">Read</label>
-              <input name="read" type="checkbox" />
+              <input
+                class="checkbox js-checkbox-read"
+                name="read"
+                type="checkbox"
+              />
             </div>
-            <input type="submit" name="submit" value="Add book" />
+            <button class="btn-add-book js-btn-add-book" type="button">
+              Add book
+            </button>
           </form>
         </div>
         <div class="bookshelf js-bookshelf"></div>
