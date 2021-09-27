@@ -35,6 +35,7 @@ function addBookToLibrary(e) {
 }
 
 function updateBookshelf() {
+  clearBookshelf();
   library.forEach((book) => {
     const bookShelf = document.querySelector('.js-bookshelf');
     const bookCard = createBookCard(book);
@@ -47,4 +48,9 @@ function createBookCard(book) {
   bookCard.classList.add('book-card');
   bookCard.innerHTML = book.getHTMLTemplate();
   return bookCard;
+}
+
+function clearBookshelf() {
+  const bookShelf = document.querySelector('.js-bookshelf');
+  bookShelf.innerHTML = '';
 }
