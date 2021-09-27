@@ -4,7 +4,7 @@ addBookBtn.onclick = addBookToLibrary;
 let library = [];
 
 class Book {
-  constructor(title, author, pages, read) {
+  constructor(title, author, read) {
     this.title = title;
     this.author = author;
     this.read = read;
