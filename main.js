@@ -1,7 +1,7 @@
-const addBookBtn = document.querySelector('.js-btn-add-book');
-addBookBtn.onclick = addBookToLibrary;
-
 let library = [];
+
+// TODO: Айдишник привязывать к номеру в массиве плохо
+// Лучше генерировать его глобально
 
 class Book {
   constructor(title, author, read) {
@@ -9,19 +9,18 @@ class Book {
     this.author = author;
     this.read = read;
   }
-  setID() {
-    this.id = library.indexOf(this);
-    return this;
-  }
-  getHTMLTemplate() {
-    return `<p>${this.title}<p>
-    <p>by<p>
-    <p>${this.author}<p>
-    <p>${this.read ? 'read' : 'not read'}<p>`;
-  }
 }
 
-function addBookToLibrary(e) {
+const addBookBtn = document.querySelector('.js-btn-add-book');
+addBookBtn.onclick = handleAddBookBtnClick;
+
+function handleAddBookBtnClick(e) {
+  const book = createBookFromDOM();
+  library.push(book);
+  addBookToBookshelf(book);
+}
+
+function createBookFromDOM() {
   const inputTitle = document.querySelector('.js-input-title');
   const inputAuthor = document.querySelector('.js-input-author');
   const checkboxRead = document.querySelector('.js-checkbox-read');
@@ -29,25 +28,38 @@ function addBookToLibrary(e) {
   const author = inputAuthor.value;
   const read = checkboxRead.checked;
   const newBook = new Book(title, author, read);
-  library.push(newBook);
-  newBook.setID();
-  updateBookshelf();
+  return newBook;
 }
 
-function updateBookshelf() {
-  clearBookshelf();
-  library.forEach((book) => {
-    const bookShelf = document.querySelector('.js-bookshelf');
-    const bookCard = createBookCard(book);
-    bookShelf.appendChild(bookCard);
-  });
+function addBookToBookshelf(book) {
+  const bookShelf = document.querySelector('.js-bookshelf');
+  const bookCard = createBookCard(book);
+  bookShelf.appendChild(bookCard);
 }
 
 function createBookCard(book) {
   const bookCard = document.createElement('div');
   bookCard.classList.add('book-card');
-  bookCard.innerHTML = book.getHTMLTemplate();
+  bookCard.innerHTML = createHTMLTemplate(book);
   return bookCard;
+}
+
+function createHTMLTemplate(book) {
+  return `<p>${book.title}<p>
+    <p>by<p>
+    <p>${book.author}<p>
+    <p>${book.read ? 'read' : 'not read'}<p>`;
+}
+
+// TODO: Ещё попробуй написать updateBookshelf() без использования clearBookshelf()
+
+function updateBookshelf() {
+  const bookShelf = document.querySelector('.js-bookshelf');
+  clearBookshelf();
+  library.forEach((book) => {
+    const bookCard = createBookCard(book);
+    bookShelf.appendChild(bookCard);
+  });
 }
 
 function clearBookshelf() {
