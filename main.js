@@ -1,17 +1,19 @@
 let library = [];
 
 class Book {
-  constructor(title, author, read) {
+  constructor(title, author, isRead) {
     this.title = title;
     this.author = author;
-    this.read = read;
+    this.isRead = isRead;
     this.id = `${title}${author}`;
   }
-  changeStatus() {
-    this.read = !this.read;
+  changeReadStatus() {
+    this.isRead = !this.isRead;
     return this;
   }
 }
+
+// "Add book" menu functions
 
 const addBookBtn = document.querySelector('.js-btn-add-book');
 addBookBtn.onclick = handleAddBookBtnClick;
@@ -27,13 +29,17 @@ function handleAddBookBtnClick(e) {
 function createBookFromDOM() {
   const inputTitle = document.querySelector('.js-input-title');
   const inputAuthor = document.querySelector('.js-input-author');
-  const checkboxRead = document.querySelector('.js-checkbox-read');
+  const checkboxRead = document.querySelector('.js-checkbox-is-read');
   const title = inputTitle.value;
   const author = inputAuthor.value;
-  const read = checkboxRead.checked;
-  const newBook = new Book(title, author, read);
+  const isRead = checkboxRead.checked;
+  const newBook = new Book(title, author, isRead);
   return newBook;
 }
+
+/*
+  Bookshelf functions
+*/
 
 function addBookToBookshelf(book) {
   const bookShelf = document.querySelector('.js-bookshelf');
@@ -45,51 +51,73 @@ function createBookCard(book) {
   const bookCard = document.createElement('div');
   bookCard.classList.add('book-card');
   bookCard.id = book.id;
+
+  // Text
+
+  const textContainer = document.createElement('div');
+  textContainer.classList.add('book-card-text-container');
   const title = document.createElement('h2');
   title.textContent = book.title;
+  textContainer.appendChild(title);
   const by = document.createElement('p');
   by.textContent = 'by';
+  textContainer.appendChild(by);
   const author = document.createElement('p');
   author.textContent = book.author;
-  const read = document.createElement('p');
-  read.id = `read${book.id}`;
-  read.textContent = book.read ? 'Read' : 'Not read';
+  textContainer.appendChild(author);
+
+  // Buttons
+
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.classList.add('book-card-buttons-container');
   const readBtn = document.createElement('button');
   readBtn.type = 'button';
+  readBtn.classList.add('read-button');
   readBtn.onclick = handleReadBtn;
-  readBtn.textContent = 'Read';
+  readBtn.textContent = book.isRead ? 'Read' : 'Not read';
+  buttonsContainer.appendChild(readBtn);
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
+  removeBtn.classList.add('remove-button');
   removeBtn.onclick = handleRemoveBtn;
   removeBtn.textContent = 'Remove';
-  bookCard.appendChild(title);
-  bookCard.appendChild(by);
-  bookCard.appendChild(author);
-  bookCard.appendChild(read);
-  bookCard.appendChild(readBtn);
-  bookCard.appendChild(removeBtn);
+  buttonsContainer.appendChild(removeBtn);
+
+  // Assembling book card
+
+  bookCard.appendChild(textContainer);
+  bookCard.appendChild(buttonsContainer);
   return bookCard;
 }
 
+/*
+  Book Card buttons functions
+*/
+
 function handleReadBtn(e) {
-  const bookCard = e.target.parentNode;
-  const bookID = bookCard.id;
-  const book = library.find((book) => book.id === bookID);
-  const newStatus = !book.read;
-  book.read = newStatus;
+  const bookCard = e.target.parentNode.parentNode;
+  const id = bookCard.id;
+  const book = library.find((book) => book.id === id);
+  book.changeReadStatus();
   const readBtn = e.target;
-  readBtn.textContent = newStatus ? 'Not read' : 'Read';
-  const bookCardRead = document.getElementById(`read${bookID}`);
-  bookCardRead.textContent = newStatus ? 'Read' : 'Not read';
+  readBtn.textContent = book.isRead ? 'Read' : 'Not read';
 }
 
 function handleRemoveBtn(e) {
-  const bookCard = e.target.parentNode;
-  const bookID = bookCard.id;
-  const bookIndex = library.findIndex((book) => book.id === bookID);
-  library.splice(bookIndex, 1);
+  const id = e.target.parentNode.parentNode.id;
+  removeBookCardById(id);
+  removeBookFromLibraryById(id);
+}
+
+function removeBookCardById(id) {
+  const bookCard = document.getElementById(id);
   const bookShelf = document.querySelector('.js-bookshelf');
   bookShelf.removeChild(bookCard);
+}
+
+function removeBookFromLibraryById(id) {
+  const bookIndex = library.findIndex((book) => book.id === id);
+  library.splice(bookIndex, 1);
 }
 
 /*
