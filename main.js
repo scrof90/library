@@ -15,8 +15,10 @@ class Book {
 
 // "Add book" menu functions
 
-const addBookBtn = document.querySelector('.js-btn-add-book');
-addBookBtn.onclick = handleAddBookBtnClick;
+function initAddBookBtn() {
+  const addBookBtn = document.querySelector('.js-btn-add-book');
+  addBookBtn.onclick = handleAddBookBtnClick;
+}
 
 function handleAddBookBtnClick(e) {
   const book = createBookFromDOM();
@@ -120,13 +122,11 @@ function removeBookFromLibraryById(id) {
   library.splice(bookIndex, 1);
 }
 
-/*
-  function populateBookshelf(arr) {
-    const bookShelf = document.querySelector('.js-bookshelf');
-    bookShelf.innerHTML = '';
-    arr.forEach((book) => addBookToBookshelf(book));
-  }
-*/
+function populateBookshelf(arr) {
+  const bookShelf = document.querySelector('.js-bookshelf');
+  bookShelf.innerHTML = '';
+  arr.forEach((book) => addBookToBookshelf(book));
+}
 
 /*
   function getRandomID() {
@@ -141,3 +141,37 @@ function removeBookFromLibraryById(id) {
   disappear! If you want, you are capable of adding some persistence to this
   library app using the Web Storage API.
 */
+
+function storageAvailable(type) {
+  var storage;
+  try {
+    storage = window[type];
+    var x = '__storage_test__';
+    storage.setItem(x, x);
+    storage.removeItem(x);
+    return true;
+  } catch (e) {
+    return (
+      e instanceof DOMException &&
+      // everything except Firefox
+      (e.code === 22 ||
+        // Firefox
+        e.code === 1014 ||
+        // test name field too, because code might not be present
+        // everything except Firefox
+        e.name === 'QuotaExceededError' ||
+        // Firefox
+        e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+      // acknowledge QuotaExceededError only if there's something already stored
+      storage &&
+      storage.length !== 0
+    );
+  }
+}
+
+(function () {
+  initAddBookBtn();
+  if (storageAvailable('localStorage')) {
+  } else {
+  }
+})();
