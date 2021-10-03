@@ -66,50 +66,51 @@ function createBookCard(book) {
   const bookCard = document.createElement('div');
   bookCard.id = book.id;
   bookCard.classList.add('book-card');
+  const textBlock = createBookCardTextBlock(book.title, book.author);
+  const btnsBlock = createBookCardBtnsBlock(book.id, book.isRead);
+  bookCard.appendChild(textBlock);
+  bookCard.appendChild(btnsBlock);
+  return bookCard;
+}
 
-  // Text block
-
+function createBookCardTextBlock(title, author) {
   const textContainer = document.createElement('div');
   textContainer.classList.add('book-card-text-container');
-  const title = document.createElement('h2');
-  title.textContent = book.title;
-  textContainer.appendChild(title);
-  const by = document.createElement('p');
-  by.textContent = 'by';
-  textContainer.appendChild(by);
-  const author = document.createElement('p');
-  author.textContent = book.author;
-  textContainer.appendChild(author);
+  const titleEl = document.createElement('h2');
+  titleEl.textContent = title;
+  const byEl = document.createElement('p');
+  byEl.textContent = 'by';
+  const authorEl = document.createElement('p');
+  authorEl.textContent = author;
+  textContainer.appendChild(titleEl);
+  textContainer.appendChild(byEl);
+  textContainer.appendChild(authorEl);
+  return textContainer;
+}
 
-  // Buttons block
-
+function createBookCardBtnsBlock(id, bookIsRead) {
   const buttonsContainer = document.createElement('div');
   buttonsContainer.classList.add('book-card-buttons-container');
   const readBtn = document.createElement('button');
-  readBtn.dataset.id = book.id;
+  readBtn.dataset.id = id;
   readBtn.type = 'button';
   readBtn.classList.add('book-card-button');
   readBtn.onclick = handleReadBtn;
-  setReadButtonStatus(readBtn, book.isRead);
+  setReadButtonStatus(readBtn, bookIsRead);
   buttonsContainer.appendChild(readBtn);
   const removeBtn = document.createElement('button');
-  removeBtn.dataset.id = book.id;
+  removeBtn.dataset.id = id;
   removeBtn.type = 'button';
   removeBtn.classList.add('book-card-button');
   removeBtn.classList.add('remove-button');
   removeBtn.onclick = handleRemoveBtn;
   removeBtn.textContent = 'X';
   buttonsContainer.appendChild(removeBtn);
-
-  // Assembling book card
-
-  bookCard.appendChild(textContainer);
-  bookCard.appendChild(buttonsContainer);
-  return bookCard;
+  return buttonsContainer;
 }
 
-function setReadButtonStatus(btn, status) {
-  if (status) {
+function setReadButtonStatus(btn, bookIsRead) {
+  if (bookIsRead) {
     btn.classList.add('read-button');
     btn.classList.remove('not-read-button');
     btn.textContent = 'READ';
