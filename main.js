@@ -64,7 +64,7 @@ function addBookToBookshelf(book) {
 
 function createBookCard(book) {
   const bookCard = document.createElement('div');
-  bookCard.dataset.id = book.id;
+  bookCard.id = book.id;
   bookCard.classList.add('book-card');
 
   // Text block
@@ -139,7 +139,7 @@ function handleRemoveBtn(e) {
 }
 
 function removeBookCardById(id) {
-  const bookCard = document.querySelector(`[data-id='${id}']`);
+  const bookCard = document.getElementById(id);
   const bookShelf = document.querySelector('.js-bookshelf');
   bookShelf.removeChild(bookCard);
 }
