@@ -96,7 +96,7 @@ function createBookCardBtnsBlock(id, bookIsRead) {
   readBtn.type = 'button';
   readBtn.classList.add('book-card-button');
   readBtn.onclick = handleReadBtn;
-  setReadButtonStatus(readBtn, bookIsRead);
+  setReadBtnStatus(readBtn, bookIsRead);
   buttonsContainer.appendChild(readBtn);
   const removeBtn = document.createElement('button');
   removeBtn.dataset.id = id;
@@ -109,7 +109,7 @@ function createBookCardBtnsBlock(id, bookIsRead) {
   return buttonsContainer;
 }
 
-function setReadButtonStatus(btn, bookIsRead) {
+function setReadBtnStatus(btn, bookIsRead) {
   if (bookIsRead) {
     btn.classList.add('read-button');
     btn.classList.remove('not-read-button');
@@ -130,7 +130,7 @@ function handleReadBtn(e) {
   const id = readBtn.dataset.id;
   const book = library.find((book) => book.id === id);
   book.changeReadStatus();
-  setReadButtonStatus(readBtn, book.isRead);
+  setReadBtnStatus(readBtn, book.isRead);
 }
 
 function handleRemoveBtn(e) {
