@@ -38,7 +38,18 @@ function createBookFromDOM() {
   const author = inputAuthor.value;
   const isRead = checkboxRead.checked;
   const newBook = new Book(title, author, isRead);
+  clearForm(inputTitle, inputAuthor, checkboxRead);
   return newBook;
+}
+
+function clearForm(...inputs) {
+  inputs.forEach((input) => {
+    if (input.type === 'text') {
+      input.value = '';
+    } else if (input.type === 'checkbox') {
+      input.checked = false;
+    }
+  });
 }
 
 /*
@@ -53,8 +64,8 @@ function addBookToBookshelf(book) {
 
 function createBookCard(book) {
   const bookCard = document.createElement('div');
+  bookCard.dataset.id = book.id;
   bookCard.classList.add('book-card');
-  bookCard.id = book.id;
 
   // Text block
 
@@ -75,20 +86,14 @@ function createBookCard(book) {
   const buttonsContainer = document.createElement('div');
   buttonsContainer.classList.add('book-card-buttons-container');
   const readBtn = document.createElement('button');
+  readBtn.dataset.id = book.id;
   readBtn.type = 'button';
   readBtn.classList.add('book-card-button');
   readBtn.onclick = handleReadBtn;
-  if (book.isRead) {
-    readBtn.classList.add('read-button');
-    readBtn.classList.remove('not-read-button');
-    readBtn.textContent = 'READ';
-  } else {
-    readBtn.classList.add('not-read-button');
-    readBtn.classList.remove('read-button');
-    readBtn.textContent = 'NOT READ';
-  }
+  setReadButtonStatus(readBtn, book.isRead);
   buttonsContainer.appendChild(readBtn);
   const removeBtn = document.createElement('button');
+  removeBtn.dataset.id = book.id;
   removeBtn.type = 'button';
   removeBtn.classList.add('book-card-button');
   removeBtn.classList.add('remove-button');
@@ -103,35 +108,38 @@ function createBookCard(book) {
   return bookCard;
 }
 
+function setReadButtonStatus(btn, status) {
+  if (status) {
+    btn.classList.add('read-button');
+    btn.classList.remove('not-read-button');
+    btn.textContent = 'READ';
+  } else {
+    btn.classList.add('not-read-button');
+    btn.classList.remove('read-button');
+    btn.textContent = 'NOT READ';
+  }
+}
+
 /*
   Book Card buttons functions
 */
 
 function handleReadBtn(e) {
-  const bookCard = e.target.parentNode.parentNode;
-  const id = bookCard.id;
+  const readBtn = e.target;
+  const id = readBtn.dataset.id;
   const book = library.find((book) => book.id === id);
   book.changeReadStatus();
-  const readBtn = e.target;
-  if (book.isRead) {
-    readBtn.classList.add('read-button');
-    readBtn.classList.remove('not-read-button');
-    readBtn.textContent = 'READ';
-  } else {
-    readBtn.classList.add('not-read-button');
-    readBtn.classList.remove('read-button');
-    readBtn.textContent = 'NOT READ';
-  }
+  setReadButtonStatus(readBtn, book.isRead);
 }
 
 function handleRemoveBtn(e) {
-  const id = e.target.parentNode.parentNode.id;
+  const id = e.target.dataset.id;
   removeBookCardById(id);
   removeBookFromLibraryById(id);
 }
 
 function removeBookCardById(id) {
-  const bookCard = document.getElementById(id);
+  const bookCard = document.querySelector(`[data-id='${id}']`);
   const bookShelf = document.querySelector('.js-bookshelf');
   bookShelf.removeChild(bookCard);
 }
