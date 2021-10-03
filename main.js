@@ -13,7 +13,9 @@ class Book {
   }
 }
 
-// "Add book" menu functions
+/*
+  "Add book" menu functions
+*/
 
 function initAddBookBtn() {
   const addBookBtn = document.querySelector('.js-btn-add-book');
@@ -54,7 +56,7 @@ function createBookCard(book) {
   bookCard.classList.add('book-card');
   bookCard.id = book.id;
 
-  // Text
+  // Text block
 
   const textContainer = document.createElement('div');
   textContainer.classList.add('book-card-text-container');
@@ -68,21 +70,30 @@ function createBookCard(book) {
   author.textContent = book.author;
   textContainer.appendChild(author);
 
-  // Buttons
+  // Buttons block
 
   const buttonsContainer = document.createElement('div');
   buttonsContainer.classList.add('book-card-buttons-container');
   const readBtn = document.createElement('button');
   readBtn.type = 'button';
-  readBtn.classList.add('read-button');
+  readBtn.classList.add('book-card-button');
   readBtn.onclick = handleReadBtn;
-  readBtn.textContent = book.isRead ? 'Read' : 'Not read';
+  if (book.isRead) {
+    readBtn.classList.add('read-button');
+    readBtn.classList.remove('not-read-button');
+    readBtn.textContent = 'READ';
+  } else {
+    readBtn.classList.add('not-read-button');
+    readBtn.classList.remove('read-button');
+    readBtn.textContent = 'NOT READ';
+  }
   buttonsContainer.appendChild(readBtn);
   const removeBtn = document.createElement('button');
   removeBtn.type = 'button';
+  removeBtn.classList.add('book-card-button');
   removeBtn.classList.add('remove-button');
   removeBtn.onclick = handleRemoveBtn;
-  removeBtn.textContent = 'Remove';
+  removeBtn.textContent = 'X';
   buttonsContainer.appendChild(removeBtn);
 
   // Assembling book card
@@ -102,7 +113,15 @@ function handleReadBtn(e) {
   const book = library.find((book) => book.id === id);
   book.changeReadStatus();
   const readBtn = e.target;
-  readBtn.textContent = book.isRead ? 'Read' : 'Not read';
+  if (book.isRead) {
+    readBtn.classList.add('read-button');
+    readBtn.classList.remove('not-read-button');
+    readBtn.textContent = 'READ';
+  } else {
+    readBtn.classList.add('not-read-button');
+    readBtn.classList.remove('read-button');
+    readBtn.textContent = 'NOT READ';
+  }
 }
 
 function handleRemoveBtn(e) {
@@ -122,11 +141,17 @@ function removeBookFromLibraryById(id) {
   library.splice(bookIndex, 1);
 }
 
+// Populate Bookshelf from array
+
+/*
 function populateBookshelf(arr) {
   const bookShelf = document.querySelector('.js-bookshelf');
   bookShelf.innerHTML = '';
   arr.forEach((book) => addBookToBookshelf(book));
 }
+ */
+
+// Random id generator;
 
 /*
   function getRandomID() {
@@ -142,7 +167,7 @@ function populateBookshelf(arr) {
   library app using the Web Storage API.
 */
 
-function storageAvailable(type) {
+/* function storageAvailable(type) {
   var storage;
   try {
     storage = window[type];
@@ -167,11 +192,12 @@ function storageAvailable(type) {
       storage.length !== 0
     );
   }
-}
+} */
 
 (function () {
   initAddBookBtn();
-  if (storageAvailable('localStorage')) {
+
+  /*   if (storageAvailable('localStorage')) {
   } else {
-  }
+  } */
 })();

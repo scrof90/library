@@ -9,10 +9,12 @@ body {
 
 .wrapper {
   margin: 0;
+  min-width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-content: center;
 }
 
 .header {
@@ -22,35 +24,53 @@ body {
   font-size: 32px;
   font-weight: 900;
   display: flex;
+  justify-content: center;
   align-items: center;
   padding: 0 16px;
 }
 
 .content {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   flex: 1;
+}
+
+.sidebar {
+  color: white;
+  background: royalblue;
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 1em;
+  padding: 0 1em;
 }
 
 .bookshelf {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: stretch;
-  align-content: stretch;
-  padding: 32px;
-  gap: 32px;
-  flex: 1 1 auto;
+  justify-content: space-around;
+  align-content: flex-start;
+  max-width: 800px;
+  padding: 1em;
+  gap: 1em;
+  align-self: center;
+  flex: 1;
 }
 
 .book-card {
   border: 1px solid #eee;
   box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.06);
   border-radius: 4px;
-  padding: 1.5em;
-  max-width: 25%;
-  max-height: 40%;
-  flex: 1 1 320px;
+  width: 10em;
+  height: 12em;
+  flex: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -65,11 +85,13 @@ body {
 
 .book-card-text-container {
   height: 80%;
+  text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 1em;
+  padding: 1em;
 }
 
 .book-card-buttons-container {
@@ -78,10 +100,24 @@ body {
   align-items: center;
 }
 
+.book-card-button {
+  color: white;
+  border: 0px;
+  font-weight: 800;
+}
+
+.not-read-button {
+  background-color: grey;
+  flex: 1;
+}
+
 .read-button {
+  background-color: limegreen;
+  flex: 1;
 }
 
 .remove-button {
+  background-color: red;
 }
 
 .footer {
@@ -93,19 +129,6 @@ body {
   justify-content: flex-end;
   align-items: center;
   padding: 10px;
-}
-
-.sidebar {
-  color: white;
-  background: royalblue;
-  flex: 0 0 30%;
-  padding: 1em;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
 }
 
 .my-github {
